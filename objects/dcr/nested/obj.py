@@ -94,8 +94,8 @@ class NestedDcrGraph(ExtendedDcrGraph):
             return
         for subNode in self.nested.allNodes[node]:
             for constraint in Relations:
-                getattr(self, constraint)[subNode].extend(getattr(self, constraint)[node])
-            self._update_nests_fall_down(self, subNode)
+                getattr(self, constraint.value)[subNode].extend(getattr(self, constraint.value)[node])
+            self._update_nests_fall_down(subNode)
 
     def _update_nests_transfer(self, node):
         if len(self.nested.allNodes[node]) == 0:
