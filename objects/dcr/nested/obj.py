@@ -36,7 +36,11 @@ class NestedDict():
 
     def __setitem__(self, key, value):
         if key not in self.allNodes:
-            subNodes = {val: {} for val in value}
+            subNodes = {}
+            for val in value:
+                newNode = {}
+                subNodes[val] = newNode
+                self.allNodes[val] = newNode
             self.roots[key] = subNodes
             self.allNodes[key] = subNodes
         else:
@@ -48,7 +52,9 @@ class NestedDict():
             subNodes = {}
             for val in value:
                 if val not in self.allNodes:
-                    subNodes[val] = {}
+                    newNode = {}
+                    subNodes[val] = newNode
+                    self.allNodes[val] = newNode
                 elif val in self.roots:
                     subNodes[val] = self.allNodes[val]
                     del self.roots[val]
