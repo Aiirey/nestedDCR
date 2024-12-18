@@ -112,7 +112,8 @@ class NestedDcrGraph(ExtendedDcrGraph):
             return
         for subNode in self.nested.allNodes[node]:
             for (key, constraint) in self.__constraints[node]:
-                getattr(self, constraint)[key].append(subNode)
+                if subNode not in getattr(self, constraint)[key]:
+                    getattr(self, constraint)[key].append(subNode)
                 self.__constraints[subNode].append((key, constraint))
             self._update_nests_transfer(subNode)
 
