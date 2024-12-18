@@ -104,25 +104,25 @@ class NestedDcrGraph(ExtendedDcrGraph):
             for (key, constraint) in self.__constraints[node]:
                 getattr(self, constraint)[key].append(subNode)
                 self.__constraints[subNode].append((key, constraint))
-            self._update_nests_transfer(self, subNode)
+            self._update_nests_transfer(subNode)
 
 
     def update_nests(self):
         for root in self.nested.roots:
-            self._update_nests_fall_down(self, root)
+            self._update_nests_fall_down(root)
         
         for constraint in Relations:
-            for x in getattr(self, constraint):
+            for x in getattr(self, constraint.value):
                 for key, subKeys in x:
                     for subKey in subKeys:
-                        self.__constraints[subKey].append((key, constraint))
+                        self.__constraints[subKey].append((key, constraint.value))
                         # if constraints[subKey] == None:
                         #     constraints[subKey] = [(key, constraint)]
                         # else:
                         #     constraints[subKey].append((key, constraint))
         
         for root in self.nested.roots:
-            self._update_nests_transfer(self, root)
+            self._update_nests_transfer(root)
 
     @property
     def nested(self) -> NestedDict:
