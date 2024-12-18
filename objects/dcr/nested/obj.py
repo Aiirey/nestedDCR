@@ -122,14 +122,9 @@ class NestedDcrGraph(ExtendedDcrGraph):
             self._update_nests_fall_down(root)
         
         for constraint in Relations:
-            for x in getattr(self, constraint.value):
-                for key, subKeys in x:
-                    for subKey in subKeys:
-                        self.__constraints[subKey].append((key, constraint.value))
-                        # if constraints[subKey] == None:
-                        #     constraints[subKey] = [(key, constraint)]
-                        # else:
-                        #     constraints[subKey].append((key, constraint))
+            for (key, subKeys) in getattr(self, constraint.value).items():
+                for subKey in subKeys:
+                    self.__constraints[subKey].append((key, constraint.value))
         
         for root in self.nested.roots:
             self._update_nests_transfer(root)
