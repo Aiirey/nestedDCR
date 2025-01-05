@@ -31,15 +31,12 @@ class HierarchicalDcrSemantics(ExtendedSemantics):
 
         for child in cls.get_super_constraints(graph, event, "excludes"):
             cls.update_nested_markings(graph, child, "included", "discard")
-        # recursively exclude all children and children's children
 
         for child in cls.get_super_constraints(graph, event, "includes"):
             cls.update_nested_markings(graph, child, "included", "add")
-        # recursively include all children and children's children
 
         for child in cls.get_super_constraints(graph, event, "responses"):
             cls.update_nested_markings(graph, child, "pending", "add")
-        # recursively response all children and children's children
 
     @classmethod
     def update_nested_markings(cls, graph, event, constraint, action):
@@ -69,7 +66,7 @@ class HierarchicalDcrSemantics(ExtendedSemantics):
     def get_nested_atomic_events(cls, graph, event):
         if event not in graph.nestedgroups:
             return set([event])
-        settet = set()
+        nested_atomic_events = set()
         for e in graph.nestedgroups[event]:
-            settet = settet.union(cls.get_nested_atomic_events(graph, e))
-        return settet
+            nested_atomic_events = nested_atomic_events.union(cls.get_nested_atomic_events(graph, e))
+        return nested_atomic_events
